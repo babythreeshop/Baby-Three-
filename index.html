@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang Chủ - Baby Three Shop</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/home.css">
+    <style>
+        /* Đảm bảo hình ảnh trong các sản phẩm có chiều cao cố định */
+        .card-img-top {
+            height: 200px; /* Chiều cao cố định */
+            object-fit: cover; /* Cắt hình ảnh để vừa khung */
+            width: 100%; /* Đảm bảo hình ảnh luôn chiếm hết chiều rộng */
+        }
+
+        /* Phóng to nút trang chủ, sản phẩm, fanpage, giỏ hàng */
+        .navbar-nav .nav-link {
+            font-size: 20px; /* Tăng kích thước chữ cho các liên kết */
+        }
+
+        .btn {
+            font-size: 18px; /* Tăng kích thước chữ cho nút */
+            padding: 10px 20px; /* Tăng kích thước nút */
+        }
+
+        /* Đảm bảo chiều cao các sản phẩm giống nhau */
+        .card {
+            height: 100%;
+            text-align: center;
+        }
+
+        .card-body {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100%; /* Đảm bảo nội dung card không làm ảnh hưởng đến chiều cao */
+        }
+
+        /* Tạo khoảng cách cho các phần tử trong card */
+        .card-body h5 {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .card-body p {
+            font-size: 14px;
+        }
+        h5 {
+            text-align: center;
+        }
+        h2 {
+            color:red;
+            font-weight: bold;
+        }
+        /* Tăng kích thước chữ giá */
+        .card-text.price {
+            font-size: 20px; /* Điều chỉnh theo kích thước mong muốn */
+        }
+
+        .card-title {
+            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container">
+          <a class="navbar-brand" href="index.html">
+              <img src="assets/image/logo.jpg" alt="Logo" width="50"> BaeChi Shop
+          </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+              <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+              <ul class="navbar-nav me-auto">
+                  <li class="nav-item"><a class="nav-link" href="login.html">Đăng Nhập</a></li>
+                  <li class="nav-item"><a class="nav-link" href="index.html">Trang Chủ</a></li>
+                  <li class="nav-item"><a class="nav-link" href="fanpage.html">Fanpage</a></li>
+                  <li class="nav-item"><a class="nav-link" href="cart.html">Giỏ Hàng</a></li>
+              </ul>
+              <form class="d-flex" id="searchForm">
+                  <input class="form-control me-2" type="search" id="searchInput" placeholder="Tìm kiếm sản phẩm" aria-label="Search">
+                  <button class="btn btn-outline-success" type="submit">Tìm</button>
+              </form>
+          </div>
+      </div>
+    </nav>
+
+    <!-- Header -->
+    <header class="bg-primary text-white text-center py-5">
+        <h1>Chào mừng đến với Baby Three Shop!</h1>
+        <p>Mua sắm ngay hôm nay để nhận ưu đãi hấp dẫn!</p>
+    </header>
+
+    <!-- Main content -->
+    <main class="container my-5">
+        <h2 class="text-center">Các Sản Phẩm Bán Chạy</h2>
+
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-4">
+
+            <!-- Sản phẩm 1 -->
+            <div class="col">
+                <div class="card h-100">
+                    <img src="assets/image/1.jpg" class="card-img-top" alt="Baby Three 1">
+                    <div class="card-body">
+                        <h5 class="card-title">1 Box Baby Three Lucky Cat</h5>
+                        <p class="card-text price">Giá: 399,000 VND</p>
+                        <a href="product-detail.html?id=1" class="btn btn-primary">Chi Tiết</a>
+                    </div>
+                </div>
+            </div>  
+
+            <!-- Sản phẩm 2 -->
+            <div class="col">
+                <div class="card h-100">
+                    <img src="assets/image/2.jpg" class="card-img-top" alt="Baby Three 2">
+                    <div class="card-body">
+                        <h5 class="card-title">1 Box Baby Three Migo</h5>
+                        <p class="card-text price">Giá: 250,000 VND</p>
+                        <a href="product-detail.html?id=2" class="btn btn-primary">Chi Tiết</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sản phẩm 3 -->
+            <div class="col">
+                <div class="card h-100">
+                    <img src="assets/image/3.jpg" class="card-img-top" alt="1 Box Cung Hoàng Đạo">
+                    <div class="card-body">
+                        <h5 class="card-title">1 Box Baby Three Cung Hoàng Đạo</h5>
+                        <p class="card-text price">Giá: 459,000 VND</p>
+                        <a href="product-detail.html?id=3" class="btn btn-primary">Chi Tiết</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sản phẩm 4 -->
+            <div class="col">
+                <div class="card h-100">
+                    <img src="assets/image/4.jpg" class="card-img-top" alt="1 Box Trái Cây">
+                    <div class="card-body">
+                        <h5 class="card-title">1 Box Trái Cây</h5>
+                        <p class="card-text price">Giá: 179,000 VND</p>
+                        <a href="product-detail.html?id=4" class="btn btn-primary">Chi Tiết</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sản phẩm 5-->
+            <div class="col">
+                <div class="card h-100">
+                    <img src="assets/image/5.jpg" class="card-img-top" alt="Baby Three 3">
+                    <div class="card-body">
+                        <h5 class="card-title">1 Box Thỏ Macaron 400%</h5>
+                        <p class="card-text price">Giá: 1,000,000 VND</p>
+                        <a href="product-detail.html?id=5" class="btn btn-primary">Chi Tiết</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sản phẩm 6-->
+            <div class="col">
+                <div class="card h-100">
+                    <img src="assets/image/6.jpg" class="card-img-top" alt="Baby Three 3">
+                    <div class="card-body">
+                        <h5 class="card-title">1 Box Baby Three 400%</h5>
+                        <p class="card-text price">Giá: 1,100,000 VND</p>
+                        <a href="product-detail.html?id=6" class="btn btn-primary">Chi Tiết</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sản phẩm 7-->
+            <div class="col">
+                <div class="card h-100">
+                    <img src="assets/image/7.jpg" class="card-img-top" alt="Baby Three 3">
+                    <div class="card-body">
+                        <h5 class="card-title">1 Box Baby Three Macaron</h5>
+                        <p class="card-text price">Giá: 650,000 VND</p>
+                        <a href="product-detail.html?id=7" class="btn btn-primary">Chi Tiết</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sản phẩm 8-->
+            <div class="col">
+                <div class="card h-100">
+                    <img src="assets/image/8.jpg" class="card-img-top" alt="Baby Three 3">
+                    <div class="card-body">
+                        <h5 class="card-title">1 Box Baby Three Hải Sản</h5>
+                        <p class="card-text price">Giá: 275,000 VND</p>
+                        <a href="product-detail.html?id=8" class="btn btn-primary">Chi Tiết</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sản phẩm 9-->
+            <div class="col">
+                <div class="card h-100">
+                    <img src="assets/image/9.jpg" class="card-img-top" alt="Baby Three 3">
+                    <div class="card-body">
+                        <h5 class="card-title">Baby Three 3</h5>
+                        <p class="card-text price">Giá: 700,000 VND</p>
+                        <a href="product-detail.html" class="btn btn-primary">Chi Tiết</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sản phẩm 10-->
+            <div class="col">
+                <div class="card h-100">
+                    <img src="assets/image/10.jpg" class="card-img-top" alt="Baby Three 3">
+                    <div class="card-body">
+                        <h5 class="card-title">Baby Three 3</h5>
+                        <p class="card-text price">Giá: 700,000 VND</p>
+                        <a href="product-detail.html" class="btn btn-primary">Chi Tiết</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sản phẩm 11-->
+            <div class="col">
+                <div class="card h-100">
+                    <img src="assets/image/11.jpg" class="card-img-top" alt="Baby Three 3">
+                    <div class="card-body">
+                        <h5 class="card-title">Baby Three 3</h5>
+                        <p class="card-text price">Giá: 700,000 VND</p>
+                        <a href="product-detail.html" class="btn btn-primary">Chi Tiết</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sản phẩm 12-->
+            <div class="col">
+                <div class="card h-100">
+                    <img src="assets/image/12.jpg" class="card-img-top" alt="Baby Three 3">
+                    <div class="card-body">
+                        <h5 class="card-title">Baby Three 3</h5>
+                        <p class="card-text price">Giá: 700,000 VND</p>
+                        <a href="product-detail.html" class="btn btn-primary">Chi Tiết</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sản phẩm 13-->
+            <div class="col">
+                <div class="card h-100">
+                    <img src="assets/image/13.jpg" class="card-img-top" alt="Baby Three 3">
+                    <div class="card-body">
+                        <h5 class="card-title">Baby Three 3</h5>
+                        <p class="card-text price">Giá: 700,000 VND</p>
+                        <a href="product-detail.html" class="btn btn-primary">Chi Tiết</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sản phẩm 14-->
+            <div class="col">
+                <div class="card h-100">
+                    <img src="assets/image/14.jpg" class="card-img-top" alt="Baby Three 3">
+                    <div class="card-body">
+                        <h5 class="card-title">Baby Three 3</h5>
+                        <p class="card-text price">Giá: 700,000 VND</p>
+                        <a href="product-detail.html" class="btn btn-primary">Chi Tiết</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sản phẩm 15-->
+            <div class="col">
+                <div class="card h-100">
+                    <img src="assets/image/15.jpg" class="card-img-top" alt="Baby Three 3">
+                    <div class="card-body">
+                        <h5 class="card-title">Baby Three 3</h5>
+                        <p class="card-text price">Giá: 700,000 VND</p>
+                        <a href="product-detail.html" class="btn btn-primary">Chi Tiết</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sản phẩm 16-->
+            <div class="col">
+                <div class="card h-100">
+                    <img src="assets/image/16.jpg" class="card-img-top" alt="Baby Three 3">
+                    <div class="card-body">
+                        <h5 class="card-title">Baby Three 3</h5>
+                        <p class="card-text price">Giá: 700,000 VND</p>
+                        <a href="product-detail.html" class="btn btn-primary">Chi Tiết</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sản phẩm 17-->
+            <div class="col">
+                <div class="card h-100">
+                    <img src="assets/image/17.jpg" class="card-img-top" alt="Baby Three 3">
+                    <div class="card-body">
+                        <h5 class="card-title">Baby Three 3</h5>
+                        <p class="card-text price">Giá: 700,000 VND</p>
+                        <a href="product-detail.html" class="btn btn-primary">Chi Tiết</a>
+                    </div>
+                </div>
+            </div>
+            <!-- Sản phẩm 18-->
+            <div class="col">
+                <div class="card h-100">
+                    <img src="assets/image/18.jpg" class="card-img-top" alt="Baby Three 3">
+                    <div class="card-body">
+                        <h5 class="card-title">Baby Three 3</h5>
+                        <p class="card-text price">Giá: 700,000 VND</p>
+                        <a href="product-detail.html" class="btn btn-primary">Chi Tiết</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sản phẩm 19-->
+            <div class="col">
+                <div class="card h-100">
+                    <img src="assets/image/19.jpg" class="card-img-top" alt="Baby Three 3">
+                    <div class="card-body">
+                        <h5 class="card-title">Baby Three 3</h5>
+                        <p class="card-text price">Giá: 700,000 VND</p>
+                        <a href="product-detail.html" class="btn btn-primary">Chi Tiết</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sản phẩm 20-->
+            <div class="col">
+                <div class="card h-100">
+                    <img src="assets/image/20.jpg" class="card-img-top" alt="Baby Three 3">
+                    <div class="card-body">
+                        <h5 class="card-title">Baby Three 3</h5>
+                        <p class="card-text price">Giá: 700,000 VND</p>
+                        <a href="product-detail.html" class="btn btn-primary">Chi Tiết</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white text-center py-3">
+        <h1><p>&copy; 2024 Baby Three Shop. Shop này có bán đồ cute nè mọi người</p></h1>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Chờ cho tài liệu HTML được tải hoàn toàn
+        document.addEventListener('DOMContentLoaded', function () {
+    // Lấy các phần tử cần thiết
+    const searchForm = document.getElementById('searchForm');
+    const searchInput = document.getElementById('searchInput');
+    const productCards = document.querySelectorAll('.card'); // Các sản phẩm
+
+    // Lắng nghe sự kiện khi người dùng tìm kiếm
+    searchForm.addEventListener('submit', function(event) {
+        event.preventDefault(); // Ngừng gửi form
+
+        // Lấy từ khóa tìm kiếm
+        const searchTerm = searchInput.value.toLowerCase(); // Đưa về chữ thường để dễ so sánh
+
+        // Duyệt qua tất cả các sản phẩm
+        productCards.forEach(function(card) {
+            const productTitle = card.querySelector('.card-title').textContent.toLowerCase();
+            
+            // Kiểm tra nếu tên sản phẩm chứa từ khóa tìm kiếm
+            if (productTitle.includes(searchTerm)) {
+                card.style.display = ''; // Hiển thị sản phẩm
+            } else {
+                card.style.display = 'none'; // Ẩn sản phẩm không phù hợp
+            }
+        });
+    });
+});
+    // Lấy thông tin 'id' từ URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const productId = urlParams.get('id');
+
+    // Hiển thị chi tiết sản phẩm dựa trên 'productId'
+    document.addEventListener('DOMContentLoaded', function() {
+        if (productId) {
+            fetchProductDetails(productId);
+        }
+    });
+
+    function fetchProductDetails(id) {
+        // Giả sử bạn có dữ liệu sản phẩm từ một nguồn (API hoặc mảng dữ liệu tĩnh)
+        const products = [
+            {id: 1, name: "1 Box Baby Three", price: "399,000 VND", description: "Mô tả chi tiết về sản phẩm 1", image: "assets/image/1.jpg"},
+            {id: 2, name: "1 Box Migo", price: "250,000 VND", description: "Mô tả chi tiết về sản phẩm 2", image: "assets/image/2.jpg"},
+            // Thêm các sản phẩm khác tại đây
+        ];
+
+        // Tìm sản phẩm theo id
+        const product = products.find(p => p.id == id);
+
+        if (product) {
+            // Cập nhật thông tin sản phẩm vào trang chi tiết
+            document.getElementById('productName').textContent = product.name;
+            document.getElementById('productPrice').textContent = product.price;
+            document.getElementById('productDescription').textContent = product.description;
+            document.getElementById('productImage').src = product.image;
+        }
+    }
+    </script>
+</body>
+</html>

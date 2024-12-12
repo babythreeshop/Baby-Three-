@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chi Tiết Sản Phẩm</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="assets/image/logo.jpg" alt="Logo" width="50"> Baby Three Shop
+            </a>
+            <div class="ml-auto">
+                <a href="cart.html" class="btn btn-secondary">Giỏ hàng (<span id="cart-count">0</span>)</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container my-5">
+        <div id="productDetails"></div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white text-center py-3">
+        <p>&copy; 2024 Baby Three Shop. Mọi quyền được bảo lưu.</p>
+    </footer>
+
+    <script>
+        // Mảng chứa thông tin các sản phẩm (ID, tên, mô tả, giá, hình ảnh)
+        const products = [
+            {
+                id: 1,
+                name: "1 Box Baby Three Lucky Cat",
+                description: "Chất lượng cao, bền đẹp, và đáng yêu. Sản phẩm được làm từ chất liệu an toàn, không gây hại cho sức khỏe trẻ em.",
+                price: 399000,
+                image: "assets/image/1.jpg",
+                category: "Đồ chơi",
+                size: "M",
+                color: "Nhiều màu",
+                stock: 20,
+                ratings: 4.5,
+                reviews: [
+                    { user: "J97", comment: "Sản phẩm tuyệt vời, chất lượng rất tốt!", rating: 5 },
+                    { user: "Meow Meow", comment: "Đẹp và chắc chắn, nhưng hơi nhỏ.", rating: 5 }
+                ],
+                specifications: { material: "Nhựa an toàn, bền đẹp", weight: "300g", dimensions: "20cm x 15cm x 10cm", origin: "Việt Nam" }
+            },
+            {
+                id: 2,
+                name: "1 Box Baby Three Migo",
+                description: "Chất lượng vượt trội, thiết kế độc đáo. Được làm từ vật liệu cao cấp, đảm bảo an toàn cho trẻ nhỏ.",
+                price: 200000,
+                image: "assets/image/2.jpg",
+                category: "Đồ chơi",
+                size: "L",
+                color: "Hồng",
+                stock: 15,
+                ratings: 4.7,
+                reviews: [
+                    { user: "Lê Minh C", comment: "Rất thích sản phẩm này, rất bền và đẹp.", rating: 5 },
+                    { user: "Phan Huy D", comment: "Chất liệu rất tốt, tuy nhiên giá hơi cao.", rating: 4.9 }
+                ],
+                specifications: { material: "Vải bền, nhựa cao cấp", weight: "350g", dimensions: "25cm x 20cm x 12cm", origin: "Việt Nam" }
+            },
+            {
+                id: 3,
+                name: "1 Box 12 Con Giáp ",
+                description: "Sản phẩm đáng tin cậy và dễ sử dụng. Chất liệu an toàn, phù hợp với trẻ em từ 3 tuổi trở lên.",
+                price: 700000,
+                image: "assets/image/3.jpg",
+                category: "Đồ chơi",
+                size: "S",
+                color: "Xanh lá",
+                stock: 10,
+                ratings: 4.8,
+                reviews: [
+                    { user: "Hoàng Thiên E", comment: "Sản phẩm tuyệt vời, rất an toàn cho trẻ em.", rating: 5 },
+                    { user: "Vũ Anh F", comment: "Sản phẩm đẹp, nhưng không có nhiều lựa chọn màu sắc.", rating: 4 }
+                ],
+                specifications: { material: "Gỗ tự nhiên, sơn an toàn", weight: "400g", dimensions: "30cm x 25cm x 15cm", origin: "Việt Nam" }
+            },
+            {
+                id: 4,
+                name: "1 Box Trái Cây",
+                description: "Sản phẩm đáng tin cậy và dễ sử dụng. Chất liệu an toàn, phù hợp với trẻ em từ 3 tuổi trở lên.",
+                price: 179000,
+                image: "assets/image/4.jpg",
+                category: "Đồ chơi",
+                size: "S",
+                color: "Xanh lá",
+                stock: 10,
+                ratings: 4.8,
+                reviews: [
+                    { user: "Hoàng Thiên E", comment: "Sản phẩm tuyệt vời, rất an toàn cho trẻ em.", rating: 5 },
+                    { user: "Vũ Anh F", comment: "Sản phẩm đẹp, nhưng không có nhiều lựa chọn màu sắc.", rating: 4 }
+                ],
+                specifications: { material: "Gỗ tự nhiên, sơn an toàn", weight: "400g", dimensions: "30cm x 25cm x 15cm", origin: "Việt Nam" }
+            },
+            {
+                id: 5,
+                name: "1 Box Thỏ Macaron 400%",
+                description: "Sản phẩm đáng tin cậy và dễ sử dụng. Chất liệu an toàn, phù hợp với trẻ em từ 3 tuổi trở lên.",
+                price: 1000000,
+                image: "assets/image/5.jpg",
+                category: "Đồ chơi",
+                size: "S",
+                color: "Xanh lá",
+                stock: 10,
+                ratings: 4.8,
+                reviews: [
+                    { user: "Hoàng Thiên E", comment: "Sản phẩm tuyệt vời, rất an toàn cho trẻ em.", rating: 5 },
+                    { user: "Vũ Anh F", comment: "Sản phẩm đẹp, nhưng không có nhiều lựa chọn màu sắc.", rating: 4 }
+                ],
+                specifications: { material: "Gỗ tự nhiên, sơn an toàn", weight: "400g", dimensions: "30cm x 25cm x 15cm", origin: "Việt Nam" }
+            }
+        ];
+
+        // Lấy tham số id từ URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const productId = parseInt(urlParams.get('id'));
+
+        const product = products.find(p => p.id === productId);
+
+        if (product) {
+            document.getElementById('productDetails').innerHTML = `
+                <div class="row">
+                    <div class="col-md-6">
+                        <img src="${product.image}" class="img-fluid" alt="${product.name}">
+                    </div>
+                    <div class="col-md-6">
+                        <h1>${product.name}</h1>
+                        <p class="text-muted">Mã sản phẩm: BT0${product.id}</p>
+                        <p class="text-success fs-4">Giá: ${product.price.toLocaleString()} VND</p>
+                        <p>${product.description}</p>
+                        <p><strong>Danh mục:</strong> ${product.category}</p>
+                        <p><strong>Kích thước:</strong> ${product.size}</p>
+                        <p><strong>Màu sắc:</strong> ${product.color}</p>
+                        <p><strong>Số lượng còn lại:</strong> ${product.stock}</p>
+                        <p><strong>Đánh giá:</strong> ${product.ratings} sao</p>
+                        <button class="btn btn-primary btn-lg" id="add-to-cart">Thêm vào giỏ hàng</button>
+                    </div>
+                </div>
+                <h3>Đánh Giá</h3>
+                <div class="reviews">
+                    ${product.reviews.map(review => `
+                        <div class="review">
+                            <p><strong>${review.user}:</strong> ${review.comment}</p>
+                            <p><strong>Đánh giá:</strong> ${review.rating} sao</p>
+                        </div>
+                    `).join('')}
+                </div>
+                <h3>Thông Số Kỹ Thuật</h3>
+                <ul>
+                    <li><strong>Chất liệu:</strong> ${product.specifications.material}</li>
+                    <li><strong>Trọng lượng:</strong> ${product.specifications.weight}</li>
+                    <li><strong>Kích thước:</strong> ${product.specifications.dimensions}</li>
+                    <li><strong>Xuất xứ:</strong> ${product.specifications.origin}</li>
+                </ul>
+            `;
+
+            // Xử lý thêm vào giỏ hàng
+            document.getElementById('add-to-cart').addEventListener('click', function() {
+                let cart = JSON.parse(localStorage.getItem('cart')) || [];
+                cart.push(product);
+                localStorage.setItem('cart', JSON.stringify(cart));
+
+                // Cập nhật số lượng trong giỏ hàng
+                const cartCount = cart.length;
+                document.getElementById('cart-count').textContent = cartCount;
+                alert('Sản phẩm đã được thêm vào giỏ hàng');
+            });
+        } else {
+            document.getElementById('productDetails').innerHTML = "<p>Sản phẩm không tồn tại.</p>";
+        }
+    </script>
+</body>
+</html>
