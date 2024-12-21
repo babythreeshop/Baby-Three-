@@ -17,9 +17,12 @@ document.getElementById('searchForm').addEventListener('submit', function (event
     const query = document.getElementById('searchInput').value.toLowerCase();
   
     if (query.trim() === "") {
-        alert("Vui lòng nhập từ khóa để tìm kiếm!");
-        return;
-    }
+      alert("Vui lòng nhập từ khóa để tìm kiếm!");
+      return;
+  } else {
+      alert("Từ khóa hợp lệ. Tiến hành tìm kiếm...");
+      // Thực hiện hành động tìm kiếm tại đây
+  }
   
     // Ví dụ: Chuyển hướng tới trang sản phẩm với kết quả tìm kiếm
     window.location.href = `products.html?search=${encodeURIComponent(query)}`;

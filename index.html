@@ -3,10 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trang Chủ - Baby Three Shop</title>
+    <title>Trang Chủ - 2TV STORE</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/home.css">
     <style>
+        header {
+            padding-bottom: 50px; /* Tăng khoảng cách dưới của header */
+        }
+        footer {
+            margin-top: 500px; /* Tăng khoảng cách giữa footer và các phần trên */
+        }
+
+        /* Đảm bảo nút Yêu Thích và Chi Tiết có kích thước giống nhau */
+        .btn {
+            font-size: 18px; /* Tăng kích thước chữ cho nút */
+            padding: 10px 20px; /* Tăng kích thước nút */
+        }
+
+        .btn-outline-danger {
+            font-size: 18px; /* Đảm bảo nút yêu thích có cùng kích thước chữ */
+            padding: 10px 20px; /* Đảm bảo padding giống với nút chi tiết */
+        }
+        .product-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Tạo lưới với cột tự động */
+            gap: 20px; /* Khoảng cách giữa các sản phẩm */
+        }
+
+        .card {
+            visibility: visible; /* Mặc định hiển thị */
+            opacity: 1; /* Hiển thị đầy đủ */
+            transition: opacity 0.3s ease-in-out; /* Hiệu ứng chuyển đổi */
+        }
+
+        .card.hidden {
+            visibility: hidden; /* Ẩn nhưng vẫn giữ không gian */
+            opacity: 0; /* Làm mờ dần */
+        }
+
+        #noProductMessage {
+            position: absolute;
+            top: 35%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: black; /* Đổi màu chữ thành đen */
+            font-size: 25;
+            text-align: center;
+            display: none; /* Ẩn mặc định */
+            padding: 10px; /* Thêm padding để không bị đè viền */
+        }
         /* Đảm bảo hình ảnh trong các sản phẩm có chiều cao cố định */
         .card-img-top {
             height: 200px; /* Chiều cao cố định */
@@ -17,11 +62,6 @@
         /* Phóng to nút trang chủ, sản phẩm, fanpage, giỏ hàng */
         .navbar-nav .nav-link {
             font-size: 20px; /* Tăng kích thước chữ cho các liên kết */
-        }
-
-        .btn {
-            font-size: 18px; /* Tăng kích thước chữ cho nút */
-            padding: 10px 20px; /* Tăng kích thước nút */
         }
 
         /* Đảm bảo chiều cao các sản phẩm giống nhau */
@@ -68,7 +108,7 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="container">
           <a class="navbar-brand" href="index.html">
-              <img src="assets/image/logo.jpg" alt="Logo" width="50"> Baby Three Shop
+              <img src="assets/image/logo.jpg" alt="Logo" width="50"> 2TV STORE
           </a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
               <span class="navbar-toggler-icon"></span>
@@ -76,13 +116,13 @@
           <div class="collapse navbar-collapse" id="navbarNav">
               <ul class="navbar-nav me-auto">
                   <li class="nav-item"><a class="nav-link" href="login.html">Đăng Nhập</a></li>
-                  <li class="nav-item"><a class="nav-link" href="index.html">Trang Chủ</a></li>
+                  <li class="nav-item"><a class="nav-link" href="favourite.html">Yêu Thích</a></li>
                   <li class="nav-item"><a class="nav-link" href="fanpage.html">Fanpage</a></li>
                   <li class="nav-item"><a class="nav-link" href="cart.html">Giỏ Hàng</a></li>
               </ul>
               <form class="d-flex" id="searchForm">
                   <input class="form-control me-2" type="search" id="searchInput" placeholder="Tìm kiếm sản phẩm" aria-label="Search">
-                  <button class="btn btn-outline-success" type="submit">Tìm kiếm</button>
+                  <button class="btn btn-outline-success" type="submit">Tìm</button>
               </form>
           </div>
       </div>
@@ -90,13 +130,13 @@
 
     <!-- Header -->
     <header class="bg-primary text-white text-center py-5">
-        <h1>Chào mừng đến với Baby Three Shop!</h1>
+        <h1>Chào mừng đến với 2TV STORE!</h1>
         <p>Mua sắm ngay hôm nay để nhận ưu đãi hấp dẫn!</p>
     </header>
 
     <!-- Main content -->
     <main class="container my-5">
-        <h2 class="text-center">Các Sản Phẩm Bán Chạy</h2>
+        <h2 id="productsTitle" class="text-center">Các Sản Phẩm Bán Chạy</h2>
 
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-4">
 
@@ -105,21 +145,24 @@
                 <div class="card h-100">
                     <img src="assets/image/1.jpg" class="card-img-top" alt="Baby Three 1">
                     <div class="card-body">
-                        <h5 class="card-title">1 Box Baby Three Lucky Cat</h5>
+                        <h5 class="card-title">BLIND BOX Baby Three Lucky Cat</h5>
                         <p class="card-text price">Giá: 399,000 VND</p>
                         <a href="product-detail.html?id=1" class="btn btn-primary">Chi Tiết</a>
+                        <!-- Thêm nút Yêu Thích -->
+                        <button class="btn btn-outline-danger mt-2" onclick="addToFavourites(1, 'BLIND BOX Baby Three Lucky Cat', 390000, 'assets/image/1.jpg')">Yêu Thích</button>
                     </div>
                 </div>
-            </div>  
-
+            </div>
             <!-- Sản phẩm 2 -->
             <div class="col">
                 <div class="card h-100">
                     <img src="assets/image/2.jpg" class="card-img-top" alt="Baby Three 2">
                     <div class="card-body">
-                        <h5 class="card-title">1 Box Baby Three Migo</h5>
+                        <h5 class="card-title">BLIND BOX Baby Three Migo</h5>
                         <p class="card-text price">Giá: 250,000 VND</p>
                         <a href="product-detail.html?id=2" class="btn btn-primary">Chi Tiết</a>
+                        <!-- Thêm nút Yêu Thích -->
+                        <button class="btn btn-outline-danger ms-2" onclick="addToFavourites('BLIND BOX BLIND BOX Baby Three Migo', 250000)">Yêu Thích</button>
                     </div>
                 </div>
             </div>
@@ -129,9 +172,11 @@
                 <div class="card h-100">
                     <img src="assets/image/3.jpg" class="card-img-top" alt="1 Box Cung Hoàng Đạo">
                     <div class="card-body">
-                        <h5 class="card-title">1 Box Baby Three Cung Hoàng Đạo</h5>
+                        <h5 class="card-title">BLIND BOX Baby Three Cung Hoàng Đạo</h5>
                         <p class="card-text price">Giá: 459,000 VND</p>
                         <a href="product-detail.html?id=3" class="btn btn-primary">Chi Tiết</a>
+                        <!-- Thêm nút Yêu Thích -->
+                        <button class="btn btn-outline-danger ms-2" onclick="addToFavourites('BLIND BOX Baby Three Cung Hoàng Đạo', 250000)">Yêu Thích</button>
                     </div>
                 </div>
             </div>
@@ -141,9 +186,11 @@
                 <div class="card h-100">
                     <img src="assets/image/4.jpg" class="card-img-top" alt="1 Box Trái Cây">
                     <div class="card-body">
-                        <h5 class="card-title">1 Box Trái Cây</h5>
+                        <h5 class="card-title">BLIND BOX Trái Cây</h5>
                         <p class="card-text price">Giá: 179,000 VND</p>
                         <a href="product-detail.html?id=4" class="btn btn-primary">Chi Tiết</a>
+                        <!-- Thêm nút Yêu Thích -->
+                        <button class="btn btn-outline-danger ms-2" onclick="addToFavourites('BLIND BOX Trái Cây', 250000)">Yêu Thích</button>
                     </div>
                 </div>
             </div>
@@ -153,9 +200,11 @@
                 <div class="card h-100">
                     <img src="assets/image/5.jpg" class="card-img-top" alt="Baby Three 3">
                     <div class="card-body">
-                        <h5 class="card-title">1 Box Thỏ Macaron 400%</h5>
+                        <h5 class="card-title">BLIND BOX Thỏ Macaron 400%</h5>
                         <p class="card-text price">Giá: 1,000,000 VND</p>
                         <a href="product-detail.html?id=5" class="btn btn-primary">Chi Tiết</a>
+                        <!-- Thêm nút Yêu Thích -->
+                        <button class="btn btn-outline-danger ms-2" onclick="addToFavourites('BLIND BOX Thỏ Macaron 400%', 250000)">Yêu Thích</button>
                     </div>
                 </div>
             </div>
@@ -165,9 +214,11 @@
                 <div class="card h-100">
                     <img src="assets/image/6.jpg" class="card-img-top" alt="Baby Three 3">
                     <div class="card-body">
-                        <h5 class="card-title">1 Box Baby Three 400%</h5>
+                        <h5 class="card-title">BLIND BOX Baby Three 400%</h5>
                         <p class="card-text price">Giá: 1,100,000 VND</p>
                         <a href="product-detail.html?id=6" class="btn btn-primary">Chi Tiết</a>
+                        <!-- Thêm nút Yêu Thích -->
+                        <button class="btn btn-outline-danger ms-2" onclick="addToFavourites('BLIND BOX Baby Three Cung Hoàng Đạo', 250000)">Yêu Thích</button>
                     </div>
                 </div>
             </div>
@@ -177,9 +228,11 @@
                 <div class="card h-100">
                     <img src="assets/image/7.jpg" class="card-img-top" alt="Baby Three 3">
                     <div class="card-body">
-                        <h5 class="card-title">1 Box Baby Three Macaron</h5>
+                        <h5 class="card-title">BLIND BOX Baby Three Macaron</h5>
                         <p class="card-text price">Giá: 650,000 VND</p>
                         <a href="product-detail.html?id=7" class="btn btn-primary">Chi Tiết</a>
+                        <!-- Thêm nút Yêu Thích -->
+                        <button class="btn btn-outline-danger ms-2" onclick="addToFavourites('BLIND BOX Baby Three Cung Hoàng Đạo', 250000)">Yêu Thích</button>
                     </div>
                 </div>
             </div>
@@ -189,9 +242,11 @@
                 <div class="card h-100">
                     <img src="assets/image/8.jpg" class="card-img-top" alt="Baby Three 3">
                     <div class="card-body">
-                        <h5 class="card-title">1 Box Baby Three Hải Sản</h5>
+                        <h5 class="card-title">BLIND BOX Baby Three Hải Sản</h5>
                         <p class="card-text price">Giá: 275,000 VND</p>
                         <a href="product-detail.html?id=8" class="btn btn-primary">Chi Tiết</a>
+                        <!-- Thêm nút Yêu Thích -->
+                        <button class="btn btn-outline-danger ms-2" onclick="addToFavourites('BLIND BOX Baby Three Cung Hoàng Đạo', 250000)">Yêu Thích</button>
                     </div>
                 </div>
             </div>
@@ -203,7 +258,9 @@
                     <div class="card-body">
                         <h5 class="card-title">Baby Three 3</h5>
                         <p class="card-text price">Giá: 700,000 VND</p>
-                        <a href="product-detail.html" class="btn btn-primary">Chi Tiết</a>
+                        <a href="product-detail.html?id=9" class="btn btn-primary">Chi Tiết</a>
+                        <!-- Thêm nút Yêu Thích -->
+                        <button class="btn btn-outline-danger ms-2" onclick="addToFavourites('BLIND BOX Baby Three Cung Hoàng Đạo', 250000)">Yêu Thích</button>
                     </div>
                 </div>
             </div>
@@ -216,6 +273,8 @@
                         <h5 class="card-title">Baby Three 3</h5>
                         <p class="card-text price">Giá: 700,000 VND</p>
                         <a href="product-detail.html" class="btn btn-primary">Chi Tiết</a>
+                        <!-- Thêm nút Yêu Thích -->
+                        <button class="btn btn-outline-danger ms-2" onclick="addToFavourites('BLIND BOX Baby Three Cung Hoàng Đạo', 250000)">Yêu Thích</button>
                     </div>
                 </div>
             </div>
@@ -228,6 +287,8 @@
                         <h5 class="card-title">Baby Three 3</h5>
                         <p class="card-text price">Giá: 700,000 VND</p>
                         <a href="product-detail.html" class="btn btn-primary">Chi Tiết</a>
+                        <!-- Thêm nút Yêu Thích -->
+                        <button class="btn btn-outline-danger ms-2" onclick="addToFavourites('BLIND BOX Baby Three Cung Hoàng Đạo', 250000)">Yêu Thích</button>
                     </div>
                 </div>
             </div>
@@ -240,170 +301,102 @@
                         <h5 class="card-title">Baby Three 3</h5>
                         <p class="card-text price">Giá: 700,000 VND</p>
                         <a href="product-detail.html" class="btn btn-primary">Chi Tiết</a>
+                        <!-- Thêm nút Yêu Thích -->
+                        <button class="btn btn-outline-danger ms-2" onclick="addToFavourites('BLIND BOX Baby Three Cung Hoàng Đạo', 250000)">Yêu Thích</button>
                     </div>
                 </div>
             </div>
-
-            <!-- Sản phẩm 13-->
-            <div class="col">
-                <div class="card h-100">
-                    <img src="assets/image/13.jpg" class="card-img-top" alt="Baby Three 3">
-                    <div class="card-body">
-                        <h5 class="card-title">Baby Three 3</h5>
-                        <p class="card-text price">Giá: 700,000 VND</p>
-                        <a href="product-detail.html" class="btn btn-primary">Chi Tiết</a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Sản phẩm 14-->
-            <div class="col">
-                <div class="card h-100">
-                    <img src="assets/image/14.jpg" class="card-img-top" alt="Baby Three 3">
-                    <div class="card-body">
-                        <h5 class="card-title">Baby Three 3</h5>
-                        <p class="card-text price">Giá: 700,000 VND</p>
-                        <a href="product-detail.html" class="btn btn-primary">Chi Tiết</a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Sản phẩm 15-->
-            <div class="col">
-                <div class="card h-100">
-                    <img src="assets/image/15.jpg" class="card-img-top" alt="Baby Three 3">
-                    <div class="card-body">
-                        <h5 class="card-title">Baby Three 3</h5>
-                        <p class="card-text price">Giá: 700,000 VND</p>
-                        <a href="product-detail.html" class="btn btn-primary">Chi Tiết</a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Sản phẩm 16-->
-            <div class="col">
-                <div class="card h-100">
-                    <img src="assets/image/16.jpg" class="card-img-top" alt="Baby Three 3">
-                    <div class="card-body">
-                        <h5 class="card-title">Baby Three 3</h5>
-                        <p class="card-text price">Giá: 700,000 VND</p>
-                        <a href="product-detail.html" class="btn btn-primary">Chi Tiết</a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Sản phẩm 17-->
-            <div class="col">
-                <div class="card h-100">
-                    <img src="assets/image/17.jpg" class="card-img-top" alt="Baby Three 3">
-                    <div class="card-body">
-                        <h5 class="card-title">Baby Three 3</h5>
-                        <p class="card-text price">Giá: 700,000 VND</p>
-                        <a href="product-detail.html" class="btn btn-primary">Chi Tiết</a>
-                    </div>
-                </div>
-            </div>
-            <!-- Sản phẩm 18-->
-            <div class="col">
-                <div class="card h-100">
-                    <img src="assets/image/18.jpg" class="card-img-top" alt="Baby Three 3">
-                    <div class="card-body">
-                        <h5 class="card-title">Baby Three 3</h5>
-                        <p class="card-text price">Giá: 700,000 VND</p>
-                        <a href="product-detail.html" class="btn btn-primary">Chi Tiết</a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Sản phẩm 19-->
-            <div class="col">
-                <div class="card h-100">
-                    <img src="assets/image/19.jpg" class="card-img-top" alt="Baby Three 3">
-                    <div class="card-body">
-                        <h5 class="card-title">Baby Three 3</h5>
-                        <p class="card-text price">Giá: 700,000 VND</p>
-                        <a href="product-detail.html" class="btn btn-primary">Chi Tiết</a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Sản phẩm 20-->
-            <div class="col">
-                <div class="card h-100">
-                    <img src="assets/image/20.jpg" class="card-img-top" alt="Baby Three 3">
-                    <div class="card-body">
-                        <h5 class="card-title">Baby Three 3</h5>
-                        <p class="card-text price">Giá: 700,000 VND</p>
-                        <a href="product-detail.html" class="btn btn-primary">Chi Tiết</a>
-                    </div>
-                </div>
-            </div>
-        </div>
     </main>
 
     <!-- Footer -->
     <footer class="bg-dark text-white text-center py-3">
-        <h1><p>&copy; 2024 Baby Three Shop. Shop này có bán đồ cute nè mọi người</p></h1>
+    <p class="copyright">© 2024 2TV STORE. Shop này có bán đồ chơi cute nè!</p>
     </footer>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // Chờ cho tài liệu HTML được tải hoàn toàn
-        document.addEventListener('DOMContentLoaded', function () {
-    // Lấy các phần tử cần thiết
-    const searchForm = document.getElementById('searchForm');
-    const searchInput = document.getElementById('searchInput');
-    const productCards = document.querySelectorAll('.card'); // Các sản phẩm
+        document.getElementById('searchForm').addEventListener('submit', function(event) {
+    event.preventDefault(); // Ngừng hành động mặc định của form
+    const searchQuery = document.getElementById('searchInput').value.trim();
+    
+    // Nếu ô tìm kiếm không rỗng, ẩn tiêu đề "Sản Phẩm Bán Chạy"
+    if (searchQuery) {
+        document.getElementById('productsTitle').style.display = 'none';
+    } else {
+        document.getElementById('productsTitle').style.display = 'block';
+    }
 
-    // Lắng nghe sự kiện khi người dùng tìm kiếm
-    searchForm.addEventListener('submit', function(event) {
-        event.preventDefault(); // Ngừng gửi form
+    // Tiến hành tìm kiếm sản phẩm tại đây nếu cần
+});
+            function addToFavourites(id, name, price, image) {
+            const product = { id, name, price, image };
+            let favourites = JSON.parse(localStorage.getItem('favourites')) || [];
+            const productExists = favourites.some(fav => fav.id === product.id);
 
-        // Lấy từ khóa tìm kiếm
-        const searchTerm = searchInput.value.toLowerCase(); // Đưa về chữ thường để dễ so sánh
-
-        // Duyệt qua tất cả các sản phẩm
-        productCards.forEach(function(card) {
-            const productTitle = card.querySelector('.card-title').textContent.toLowerCase();
-            
-            // Kiểm tra nếu tên sản phẩm chứa từ khóa tìm kiếm
-            if (productTitle.includes(searchTerm)) {
-                card.style.display = ''; // Hiển thị sản phẩm
+            if (!productExists) {
+                favourites.push(product);
+                localStorage.setItem('favourites', JSON.stringify(favourites));
+                alert('Sản phẩm đã được thêm vào yêu thích!');
             } else {
-                card.style.display = 'none'; // Ẩn sản phẩm không phù hợp
+                alert('Sản phẩm đã có trong danh sách yêu thích!');
+            }
+        }
+         function addToFavourites(productName, productPrice) {
+      // Lưu sản phẩm vào localStorage
+      let favourites = JSON.parse(localStorage.getItem('favourites')) || [];
+      
+      // Kiểm tra xem sản phẩm đã có trong danh sách yêu thích chưa
+      let exists = favourites.some(item => item.name === productName);
+      
+      if (!exists) {
+          // Thêm sản phẩm vào danh sách yêu thích
+          favourites.push({ name: productName, price: productPrice });
+          localStorage.setItem('favourites', JSON.stringify(favourites));
+          
+          // Hiển thị thông báo cho người dùng
+          alert('Bạn đã thêm vào danh sách yêu thích');
+      } else {
+          alert('Sản phẩm đã có trong danh sách yêu thích');
+      }
+  }
+        // Chờ cho tài liệu HTML được tải hoàn toàn
+         document.addEventListener('DOMContentLoaded', function () {
+        // Lấy các phần tử cần thiết
+        const searchForm = document.getElementById('searchForm');
+        const searchInput = document.getElementById('searchInput');
+        const productCards = document.querySelectorAll('.card'); // Các sản phẩm
+        const noProductMessage = document.createElement('p'); // Tạo phần tử thông báo
+        noProductMessage.id = 'noProductMessage';
+        noProductMessage.textContent = 'Sản phẩm không tồn tại.';
+        document.body.appendChild(noProductMessage); // Thêm thông báo vào cuối thân trang
+
+        // Lắng nghe sự kiện khi người dùng tìm kiếm
+        searchForm.addEventListener('submit', function (event) {
+            event.preventDefault(); // Ngừng gửi form
+
+            // Lấy từ khóa tìm kiếm
+            const searchTerm = searchInput.value.toLowerCase(); // Đưa về chữ thường để dễ so sánh
+            let hasResult = false; // Đặt cờ để kiểm tra xem có sản phẩm nào hiển thị không
+
+            // Duyệt qua tất cả các sản phẩm
+            productCards.forEach(function (card) {
+                const productTitle = card.querySelector('.card-title').textContent.toLowerCase();
+
+                // Kiểm tra nếu tên sản phẩm chứa từ khóa tìm kiếm
+                if (productTitle.includes(searchTerm)) {
+                    card.style.display = ''; // Hiển thị sản phẩm
+                    hasResult = true; // Cập nhật cờ nếu tìm thấy sản phẩm
+                } else {
+                    card.style.display = 'none'; // Ẩn sản phẩm không phù hợp
+                }
+            });
+            // Hiển thị hoặc ẩn thông báo
+            if (hasResult) {
+                noProductMessage.style.display = 'none'; // Ẩn thông báo
+            } else {
+                noProductMessage.style.display = 'block'; // Hiển thị thông báo
             }
         });
     });
-});
-    // Lấy thông tin 'id' từ URL
-    const urlParams = new URLSearchParams(window.location.search);
-    const productId = urlParams.get('id');
-
-    // Hiển thị chi tiết sản phẩm dựa trên 'productId'
-    document.addEventListener('DOMContentLoaded', function() {
-        if (productId) {
-            fetchProductDetails(productId);
-        }
-    });
-
-    function fetchProductDetails(id) {
-        // Giả sử bạn có dữ liệu sản phẩm từ một nguồn (API hoặc mảng dữ liệu tĩnh)
-        const products = [
-            {id: 1, name: "1 Box Baby Three", price: "399,000 VND", description: "Mô tả chi tiết về sản phẩm 1", image: "assets/image/1.jpg"},
-            {id: 2, name: "1 Box Migo", price: "250,000 VND", description: "Mô tả chi tiết về sản phẩm 2", image: "assets/image/2.jpg"},
-            // Thêm các sản phẩm khác tại đây
-        ];
-
-        // Tìm sản phẩm theo id
-        const product = products.find(p => p.id == id);
-
-        if (product) {
-            // Cập nhật thông tin sản phẩm vào trang chi tiết
-            document.getElementById('productName').textContent = product.name;
-            document.getElementById('productPrice').textContent = product.price;
-            document.getElementById('productDescription').textContent = product.description;
-            document.getElementById('productImage').src = product.image;
-        }
-    }
     </script>
 </body>
 </html>

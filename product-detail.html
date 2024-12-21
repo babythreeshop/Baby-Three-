@@ -1,17 +1,106 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chi Tiết Sản Phẩm</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-</head>
-<body>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Chi Tiết Sản Phẩm</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+        <style>
+        /* Vị trí và kiểu dáng của hộp chat */
+        .chat-box {
+            position: fixed;
+            bottom: 60px; /* Điều chỉnh để hộp chat không che nút */
+            right: 10px;
+            width: 300px;
+            height: 400px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            display: none; /* Bắt đầu ẩn ô chat */
+            flex-direction: column;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .chat-header {
+            background-color: #007bff;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            font-weight: bold;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+        }
+        .chat-body {
+            flex: 1;
+            padding: 10px;
+            overflow-y: auto;
+            font-size: 14px;
+            border-bottom: 1px solid #ccc;
+        }
+        .chat-input {
+            padding: 10px;
+            border-top: 1px solid #ccc;
+            display: flex;
+        }
+        .chat-input input {
+            flex: 1;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        .chat-toggle {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 50%;
+            font-size: 24px;
+            cursor: pointer;
+        }
+            /* Làm cho nút chuyển carousel màu đen */
+            .carousel-control-prev-icon,
+            .carousel-control-next-icon {
+                color: black; /* Mũi tên màu đen */
+                width: 50px; /* Tăng kích thước */
+                height: 50px;
+                border-radius: 50%; /* Làm nút tròn */
+            }
+        
+            /* Tăng kích thước mũi tên bên trong */
+            .carousel-control-prev-icon::after,
+            .carousel-control-next-icon::after {
+                color: white; /* Mũi tên màu trắng để tương phản */
+                font-size: 2rem;
+            }
+        
+            /* Đảm bảo nút hiển thị rõ */
+            .carousel-control-prev,
+            .carousel-control-next {
+                opacity: 1;
+            }
+        </style>        
+    </head>
+    <body>
+    <!-- Hộp chat -->
+    <div class="chat-box" id="chatBox">
+        <div class="chat-header">Chat Trực Tiếp</div>
+        <div class="chat-body" id="chatBody">
+    <!-- Tin nhắn sẽ hiển thị ở đây sau này -->
+        </div>
+        <div class="chat-input">
+            <input type="text" id="userMessage" placeholder="Nhập tin nhắn...">
+            <button>Gửi</button>
+        </div>
+    </div>
+    <!-- Nút mở/đóng chat -->
+    <button class="chat-toggle" onclick="toggleChat()">Chat</button>
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container">
             <a class="navbar-brand" href="index.html">
-                <img src="assets/image/logo.jpg" alt="Logo" width="50"> Baby Three Shop
+                <img src="assets/image/logo.jpg" alt="Logo" width="50"> 2TV STORE
             </a>
             <div class="ml-auto">
                 <a href="cart.html" class="btn btn-secondary">Giỏ hàng (<span id="cart-count">0</span>)</a>
@@ -26,18 +115,28 @@
 
     <!-- Footer -->
     <footer class="bg-dark text-white text-center py-3">
-        <p>&copy; 2024 Baby Three Shop. Mọi quyền được bảo lưu.</p>
+        <p>&copy; 2024 2TV STORE. Mọi quyền được bảo lưu.</p>
     </footer>
 
     <script>
+        // Mở và đóng hộp chat
+        function toggleChat() {
+            const chatBox = document.getElementById('chatBox');
+            if (chatBox.style.display === 'none' || chatBox.style.display === '') {
+                chatBox.style.display = 'flex';
+            } else {
+                chatBox.style.display = 'none';
+            }
+        }
         // Mảng chứa thông tin các sản phẩm (ID, tên, mô tả, giá, hình ảnh)
         const products = [
             {
                 id: 1,
-                name: "1 Box Baby Three Lucky Cat",
+                name: "BLIND BOX Baby Three Lucky Cat",
                 description: "Chất lượng cao, bền đẹp, và đáng yêu. Sản phẩm được làm từ chất liệu an toàn, không gây hại cho sức khỏe trẻ em.",
                 price: 399000,
                 image: "assets/image/1.jpg",
+                extraImages: ["assets/image/2.jpg", "assets/image/3.jpg", "assets/image/4.jpg"],
                 category: "Đồ chơi",
                 size: "M",
                 color: "Nhiều màu",
@@ -51,10 +150,11 @@
             },
             {
                 id: 2,
-                name: "1 Box Baby Three Migo",
+                name: "BLIND BOX Baby Three Migo",
                 description: "Chất lượng vượt trội, thiết kế độc đáo. Được làm từ vật liệu cao cấp, đảm bảo an toàn cho trẻ nhỏ.",
                 price: 200000,
                 image: "assets/image/2.jpg",
+                extraImages: ["assets/image/5.jpg", "assets/image/3.jpg", "assets/image/4.jpg"],
                 category: "Đồ chơi",
                 size: "L",
                 color: "Hồng",
@@ -68,10 +168,11 @@
             },
             {
                 id: 3,
-                name: "1 Box 12 Con Giáp ",
+                name: "BLIND BOX 12 Con Giáp ",
                 description: "Sản phẩm đáng tin cậy và dễ sử dụng. Chất liệu an toàn, phù hợp với trẻ em từ 3 tuổi trở lên.",
                 price: 700000,
                 image: "assets/image/3.jpg",
+                extraImages: ["assets/image/5.jpg", "assets/image/3.jpg", "assets/image/4.jpg"],
                 category: "Đồ chơi",
                 size: "S",
                 color: "Xanh lá",
@@ -85,10 +186,11 @@
             },
             {
                 id: 4,
-                name: "1 Box Trái Cây",
+                name: "BLIND BOX Trái Cây",
                 description: "Sản phẩm đáng tin cậy và dễ sử dụng. Chất liệu an toàn, phù hợp với trẻ em từ 3 tuổi trở lên.",
                 price: 179000,
                 image: "assets/image/4.jpg",
+                extraImages: ["assets/image/5.jpg", "assets/image/3.jpg", "assets/image/4.jpg"],
                 category: "Đồ chơi",
                 size: "S",
                 color: "Xanh lá",
@@ -102,10 +204,11 @@
             },
             {
                 id: 5,
-                name: "1 Box Thỏ Macaron 400%",
+                name: "BLIND BOX Thỏ Macaron 400%",
                 description: "Sản phẩm đáng tin cậy và dễ sử dụng. Chất liệu an toàn, phù hợp với trẻ em từ 3 tuổi trở lên.",
                 price: 1000000,
                 image: "assets/image/5.jpg",
+                extraImages: ["assets/image/5.jpg", "assets/image/3.jpg", "assets/image/4.jpg"],
                 category: "Đồ chơi",
                 size: "S",
                 color: "Xanh lá",
@@ -124,44 +227,84 @@
         const productId = parseInt(urlParams.get('id'));
 
         const product = products.find(p => p.id === productId);
+        function displayStars(rating) {
+            let stars = '';
+            let fullStars = Math.floor(rating); // Số ngôi sao đầy
+            let halfStar = rating % 1 >= 0.5;  // Kiểm tra nếu có nửa sao
 
+            // Thêm ngôi sao đầy
+            for (let i = 0; i < fullStars; i++) {
+                stars += '⭐';
+            }
+
+            // Thêm nửa sao nếu có
+            if (halfStar) {
+                stars += '⭐';
+            }
+
+            // Thêm ngôi sao rỗng cho phần còn lại
+            for (let i = fullStars + (halfStar ? 1 : 0); i < 5; i++) {
+                stars += '☆';
+            }
+
+            return stars;
+        }
         if (product) {
             document.getElementById('productDetails').innerHTML = `
-                <div class="row">
-                    <div class="col-md-6">
-                        <img src="${product.image}" class="img-fluid" alt="${product.name}">
-                    </div>
-                    <div class="col-md-6">
-                        <h1>${product.name}</h1>
-                        <p class="text-muted">Mã sản phẩm: BT0${product.id}</p>
-                        <p class="text-success fs-4">Giá: ${product.price.toLocaleString()} VND</p>
-                        <p>${product.description}</p>
-                        <p><strong>Danh mục:</strong> ${product.category}</p>
-                        <p><strong>Kích thước:</strong> ${product.size}</p>
-                        <p><strong>Màu sắc:</strong> ${product.color}</p>
-                        <p><strong>Số lượng còn lại:</strong> ${product.stock}</p>
-                        <p><strong>Đánh giá:</strong> ${product.ratings} sao</p>
-                        <button class="btn btn-primary btn-lg" id="add-to-cart">Thêm vào giỏ hàng</button>
-                    </div>
-                </div>
-                <h3>Đánh Giá</h3>
-                <div class="reviews">
-                    ${product.reviews.map(review => `
-                        <div class="review">
-                            <p><strong>${review.user}:</strong> ${review.comment}</p>
-                            <p><strong>Đánh giá:</strong> ${review.rating} sao</p>
+            <div class="row">
+                <div class="col-md-6">
+                    <!-- Carousel -->
+                    <div id="productCarousel" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img src="${product.image}" class="d-block w-100" alt="${product.name}">
+                            </div>
+                            ${product.extraImages.map(image => `
+                                <div class="carousel-item">
+                                    <img src="${image}" class="d-block w-100" alt="Extra Image">
+                                </div>
+                            `).join('')}
                         </div>
-                    `).join('')}
+                        <button class="carousel-control-prev" type="button" data-bs-target="#productCarousel" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#productCarousel" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                    </div>
                 </div>
-                <h3>Thông Số Kỹ Thuật</h3>
-                <ul>
-                    <li><strong>Chất liệu:</strong> ${product.specifications.material}</li>
-                    <li><strong>Trọng lượng:</strong> ${product.specifications.weight}</li>
-                    <li><strong>Kích thước:</strong> ${product.specifications.dimensions}</li>
-                    <li><strong>Xuất xứ:</strong> ${product.specifications.origin}</li>
-                </ul>
-            `;
-
+                <div class="col-md-6">
+                    <h1>${product.name}</h1>
+                    <p class="text-muted">Mã sản phẩm: BT0${product.id}</p>
+                    <p class="text-success fs-4">Giá: ${product.price.toLocaleString()} VND</p>
+                    <p>${product.description}</p>
+                    <p><strong>Danh mục:</strong> ${product.category}</p>
+                    <p><strong>Kích thước:</strong> ${product.size}</p>
+                    <p><strong>Màu sắc:</strong> ${product.color}</p>
+                    <p><strong>Số lượng còn lại:</strong> ${product.stock}</p>
+                    <p><strong>Đánh giá:</strong> ${displayStars(product.ratings)}</p>
+                    <button class="btn btn-primary btn-lg" id="add-to-cart">Thêm vào giỏ hàng</button>
+                </div>
+            </div>
+            <h3>Đánh Giá</h3>
+            <div class="reviews">
+                ${product.reviews.map(review => `
+                    <div class="review">
+                        <p><strong>${review.user}:</strong> ${review.comment}</p>
+                        <p><strong>Đánh giá:</strong> ${displayStars(review.rating)}</p>
+                    </div>
+                `).join('')}
+            </div>
+            <h3>Thông Số Kỹ Thuật</h3>
+            <ul>
+                <li><strong>Chất liệu:</strong> ${product.specifications.material}</li>
+                <li><strong>Trọng lượng:</strong> ${product.specifications.weight}</li>
+                <li><strong>Kích thước:</strong> ${product.specifications.dimensions}</li>
+                <li><strong>Xuất xứ:</strong> ${product.specifications.origin}</li>
+            </ul>
+        `;
             // Xử lý thêm vào giỏ hàng
             document.getElementById('add-to-cart').addEventListener('click', function() {
                 let cart = JSON.parse(localStorage.getItem('cart')) || [];
@@ -177,5 +320,6 @@
             document.getElementById('productDetails').innerHTML = "<p>Sản phẩm không tồn tại.</p>";
         }
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

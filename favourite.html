@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yêu Thích - 2TV STORE</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        /* Đảm bảo nút Yêu Thích và Chi Tiết có kích thước giống nhau */
+        .btn {
+            font-size: 18px;
+            padding: 10px 20px;
+        }
+
+        .btn-outline-danger {
+            font-size: 18px;
+            padding: 10px 20px;
+        }
+
+        .product-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            visibility: visible;
+            opacity: 1;
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        .card.hidden {
+            visibility: hidden;
+            opacity: 0;
+        }
+
+        #noProductMessage {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: red;
+            font-size: 1.5em;
+            text-align: center;
+            display: none;
+        }
+
+        .card-img-top {
+            height: 200px;
+            object-fit: cover;
+            width: 100%;
+        }
+
+        h5 {
+            text-align: center;
+        }
+
+        h2 {
+            color:red;
+            font-weight: bold;
+        }
+
+        .card-text.price {
+            font-size: 20px;
+        }
+
+        .card-title {
+            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="assets/image/logo.jpg" alt="Logo" width="50"> 2TV STORE
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item"><a class="nav-link" href="login.html">Đăng Nhập</a></li>
+                    <li class="nav-item"><a class="nav-link" href="favourite.html">Yêu Thích</a></li>
+                    <li class="nav-item"><a class="nav-link" href="fanpage.html">Fanpage</a></li>
+                    <li class="nav-item"><a class="nav-link" href="cart.html">Giỏ Hàng</a></li>
+                </ul>
+                <form class="d-flex" id="searchForm">
+                    <input class="form-control me-2" type="search" id="searchInput" placeholder="Tìm kiếm sản phẩm" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Tìm</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main content -->
+    <main class="container my-5">
+        <h2 class="text-center">Sản Phẩm Yêu Thích</h2>
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-4" id="favourite-products">
+            <!-- Các sản phẩm yêu thích sẽ được thêm vào đây -->
+        </div>
+        <div id="noProductMessage">Bạn chưa thêm sản phẩm nào vào danh sách yêu thích.</div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white text-center py-3">
+        <p>&copy; 2024 2TV STORE. Shop này có bán đồ chơi cute nè!</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Lấy sản phẩm yêu thích từ localStorage
+            let favourites = JSON.parse(localStorage.getItem('favourites')) || [];
+
+            // Nếu không có sản phẩm yêu thích
+            if (favourites.length === 0) {
+                document.getElementById('noProductMessage').style.display = 'block';
+            }
+
+            const favouriteContainer = document.getElementById('favourite-products');
+            
+            // Lặp qua từng sản phẩm yêu thích và hiển thị
+            favourites.forEach((product, index) => {
+                const productCard = `
+                    <div class="col">
+                        <div class="card">
+                            <img src="${product.image}" class="card-img-top" alt="${product.name}">
+                            <div class="card-body">
+                                <h5 class="card-title">${product.name}</h5>
+                                <p class="card-text price">Giá: ${product.price.toLocaleString()} VND</p>
+                                <a href="product-detail.html?id=${product.id}" class="btn btn-primary">Chi Tiết</a>
+                                <button class="btn btn-outline-danger mt-2" onclick="removeFromFavourites(${index})">Xóa</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                favouriteContainer.innerHTML += productCard;
+            });
+        });
+
+        // Hàm xóa sản phẩm khỏi danh sách yêu thích
+        function removeFromFavourites(index) {
+            let favourites = JSON.parse(localStorage.getItem('favourites')) || [];
+            favourites.splice(index, 1); // Xóa sản phẩm tại index
+            localStorage.setItem('favourites', JSON.stringify(favourites)); // Cập nhật lại localStorage
+            location.reload(); // Tải lại trang để cập nhật danh sách
+        }
+    </script>
+</body>
+</html>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Giỏ Hàng - Baby Three Shop</title>
+    <title>Giỏ Hàng - 2TV STORE</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
 </head>
 <body>
@@ -11,7 +11,7 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container">
             <a class="navbar-brand" href="index.html">
-                <img src="assets/image/logo.jpg" alt="Logo" width="50"> Baby Three Shop
+                <img src="assets/image/logo.jpg" alt="Logo" width="50"> 2TV STORE
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
@@ -19,7 +19,7 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item"><a class="nav-link" href="login.html">Đăng nhập</a></li>
-                    <li class="nav-item"><a class="nav-link" href="index.html">Trang Chủ</a></li>
+                    <li class="nav-item"><a class="nav-link" href="favourite.html">Yêu Thích</a></li>
                     <li class="nav-item"><a class="nav-link" href="fanpage.html">Fanpage</a></li>
                     <li class="nav-item"><a class="nav-link" href="cart.html">Giỏ Hàng</a></li>
                 </ul>
@@ -47,7 +47,7 @@
         </table>
         <div class="text-end">
             <button class="btn btn-danger" id="clearCart">Xóa Tất Cả</button>
-            <button class="btn btn-success">Thanh Toán</button>
+            <button class="btn btn-success" id="checkoutBtn">Thanh Toán</button>
         </div>
     </main>
 
@@ -138,6 +138,19 @@
         document.getElementById('clearCart').addEventListener('click', () => {
             localStorage.removeItem('cart');
             renderCart();
+        });
+
+        // Lắng nghe sự kiện click vào nút thanh toán
+        document.getElementById('checkoutBtn').addEventListener('click', () => {
+            // Kiểm tra giỏ hàng có sản phẩm không
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+            if (cart.length === 0) {
+                alert("Giỏ hàng của bạn đang trống!");
+            } else {
+                // Chuyển hướng sang trang thanh toán
+                window.location.href = "pay.html";
+            }
         });
 
         // Hiển thị giỏ hàng khi tải trang
